@@ -1,0 +1,38 @@
+name: Auto Clean for Hugo
+
+on:
+  push:
+    branches: [ raw ]  # 只要 raw 分支有更新，就触发
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout raw code
+        uses: actions/checkout@v4
+        with:
+          ref: raw # 拉取厨房的代码
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Clean Script
+        # ⚠️ 注意：这里假设你的脚本文件名叫 fix_cover.py
+        # 如果你的脚本在 content 文件夹里，要改成 python content/fix_cover.py
+        run: |
+          python fix_cover.py #这个文件后面会给出实例文件，如果你不是使用思源发布插件发布，可以忽略掉，但一定要创造这个文件，不然action可能会报错。
+
+      - name: Push to main
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          # 强制推送到 main 分支，这就相当于把干净的菜端上桌
+          git checkout -b main_clean
+          git add .
+          git commit -m "Auto clean by Action"
+          git push -f origin main_clean:main
