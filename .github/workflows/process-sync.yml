@@ -32,7 +32,8 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           # 强制推送到 main 分支，这就相当于把干净的菜端上桌
-          git checkout -b main_clean
+          git checkout -B main_clean
           git add .
-          git commit -m "Auto clean by Action"
+          # 清洗后若无文件变更，commit 会失败；跳过即可，仍要把 raw 内容推到 main
+          git diff --cached --quiet || git commit -m "Auto clean by Action"
           git push -f origin main_clean:main
