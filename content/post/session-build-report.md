@@ -15,6 +15,7 @@ tags:
   - Hugo
   - Cloudflare
   - GitHub Actions
+
 ---
 
 本文记录本仓库从空壳到可公网访问期间的主要决策、踩坑与结论，便于后续扩写内容或排查问题时对照。
@@ -36,7 +37,7 @@ tags:
 主题采用 Git Submodule / 本地目录方式，而不是 Hugo Module。
 
 | 项目 | 说明 |
-|------|------|
+| :--- | :--- |
 | 主题路径 | 必须是 `themes/reimu/`，不能把主题文件直接摊在 `themes/` 根下 |
 | 配置写法 | `hugo.toml` 中写 `theme = "reimu"` |
 | 对比 Module | Module 写模块地址且主题不落在 `themes/`；本地方式便于手动改主题与对照文件 |
@@ -48,7 +49,7 @@ tags:
 交流中出现过多类 Git 问题，性质不同，需分开处理：
 
 | 现象 | 原因 | 处理方向 |
-|------|------|----------|
+| :--- | :--- | :--- |
 | `remote origin already exists` | 重复 `git remote add` | 用 `git remote set-url` 修改地址 |
 | Author identity unknown | 未配置 `user.name` / `user.email` | 本地自行配置身份后再 commit |
 | `Connection was reset` / 连不上 `github.com:443` | 网络或未走代理 | 开代理、给 Git 配 proxy，或改 SSH |
@@ -91,7 +92,7 @@ Reimu 主题要求 **Hugo ≥ 0.158.0（extended）**。若使用 Cloudflare 默
 ## 6. 内容应放在哪里
 
 | 路径 | 含义 |
-|------|------|
+| :--- | :--- |
 | `content/` | **正式内容目录**，文章与页面写在这里 |
 | `themes/reimu/_example/` | 主题自带的 **结构示例**，只作参考，不要当生产内容目录改 |
 
